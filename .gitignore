@@ -1,0 +1,11 @@
+# Compiled binary addons
+build/Release
+
+# Dependency directory
+node_modules
+
+# mongo database
+data
+
+# old code, cmds, etc
+oldies
