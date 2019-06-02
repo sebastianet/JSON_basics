@@ -10,11 +10,12 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "sudo node my_server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "pendent"
+    "url": "https://github.com/sebastianet/JSON_basics"
   },
   "author": "",
   "license": "ISC"

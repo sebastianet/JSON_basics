@@ -14,7 +14,7 @@
 //             1.5 - from Windows use http://localhost:133/ or http://localhost:133/go
 //             1.6 - npm link body-parser
 //             2.0 - app.listen, no http
-//             2.0.b - use port 80
+//             2.0.b - use port 80, so we start with sudo
 //             2.1 - show current dir in /lsof
 //             2.1.b - show filename
 //             2.1.c - usr ENV
@@ -24,25 +24,45 @@
 //                       github : https://github.com/sebastianet/JSON_basics.git
 //                       git remote add origin https://github.com/sebastianet/JSON_basics.git
 //                       create .gitignore
-//                       git add .A
+//                       git add .
 //                       git commit -am 'v 1.0 - first commit' 
+//                       git push -u origin master
+//             2.1.e - use .env - https://www.npmjs.com/package/dotenv
+//             2.1.f - read nodes from text file
 //
 
- var myVersion = "2.1.d" ;
+var myVersion = "2.1.f" ;
 
- var express = require( 'express' ) ;
-// var http    = require( 'http' ) ;
- var morgan  = require( 'morgan' ) ;         // log requests to the console (express4)
+var express = require( 'express' ) ;
+var morgan  = require( 'morgan' ) ;          // log requests to the console (express4)
 
- var app = express() ; // instantiate Express and assign our app variable to it.
- var bodyParser = require( 'body-parser' ) ;
+var app = express() ;                        // instantiate Express and assign our app variable to it.
+var bodyParser = require( 'body-parser' ) ;
 
- require('dotenv').config() ; // sudo apt-get install dotenv
- app.set( 'mPort', process.env.PORT || 80 ) ; // need 80 for wget
- var szHostName = require('os').hostname() ;  // https://nodejs.org/api/os.html
+const os = require( 'os' ) ;                 // https://nodejs.org/api/os.html
+const dotenv = require('dotenv') ;           // sudo apt-get install dotenv
+const fs = require('fs');
+const path = require('path');
 
- app.use( bodyParser.json() ) ;
- app.use( morgan('dev') ) ;                  // log every request to the console
+app.use( bodyParser.json() ) ;
+app.use( morgan('dev') ) ;                   // log every request to the console
+
+// serve static files from ...
+app.use( express.static( path.join( __dirname, 'client' ) ) ) ;
+
+// my variables
+
+var szHostName = os.hostname() ;             // https://nodejs.org/api/os.html
+
+const myEnv = dotenv.config();               //  read .env file, parse the contents, assign it to process.env
+if ( myEnv.error ) {
+    throw myEnv.error
+} ;
+console.log( myEnv.parsed ) ;
+app.set( 'mPort', process.env.PORT || 81 ) ; // need 80 for wget
+
+var myNodesText ;
+var myNodesJS ;
 
 // Date() prototypes - use as
 // var szOut = (new Date).yyyymmdd() + '-' + (new Date).hhmmss() + ' ' + szIn + '<br>' ;
@@ -78,7 +98,7 @@ function genTimeStamp ( arg ) {
 
 } ; // genTimeStamp()
 
-
+ 
 // +++ lets set some routes
 
 app.use( function ( req, res, next ) {
@@ -86,7 +106,6 @@ app.use( function ( req, res, next ) {
     console.log( '### [' + szHostName + '] common TimeStamp: ' + (new Date).yyyymmdd() + '-' + (new Date).hhmmss() + ' ###' ) ;
     next() ;
 } ) ; // timestamp all
-
 
 app.get( '/', function( req, res ) {
 //
@@ -107,17 +126,16 @@ app.get( '/', function( req, res ) {
    console.log( '* {' + szTime + '} * GET /lsof method' ) ;
  } ) ; // get /lsof
 
-// --- lets set some routes
+app.get( '/info', function (req, res) {
+    res.send(serverInfo);
+});
+    
+app.get( '/nodes', function (req, res) {
+    res.send(nodes);
+}); 
 
-
-// http.createServer( function ( req, res ) {
-//   console.log( '* create server {%s}.', szHostName ) ;
-// } ).listen( app.get('mPort') ) ;
-
-// app.listen(3000, () => {
+// +++ start the server
 app.listen( app.get( 'mPort' ), () => {
-    console.log( '*** MinWebSrv listening on port {'+ app.get( 'mPort' ) + '} ...' )
+    console.log( '*** MinWebSrv listening on port {' + app.get( 'mPort' ) + '}, host {' + szHostName + '} ...' )
 } ) ;
-
- console.log( '*** MinWebSrv server listening on port [' + app.get('mPort') + '], host {'+ szHostName +'}.' ) ;
 

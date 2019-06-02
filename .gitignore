@@ -4,8 +4,8 @@ build/Release
 # Dependency directory
 node_modules
 
-# mongo database
-data
+# envir file
+.env
 
 # old code, cmds, etc
 oldies

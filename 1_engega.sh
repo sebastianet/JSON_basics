@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 mydate=`date +"y%Y/m%m/d%d"`
 mytime=`date +"h%H:m%M"`
