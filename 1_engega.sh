@@ -36,10 +36,12 @@ else
   logFN="/tmp/"$mLog
 fi
 
-szTxt="("$mydate"-"$mytime") +++ +++ +++ ($myhn) +++ minimal Web Server, log to ("$logFN")."
+# posem linia a syslog - visible amb "cat /var/log/syslog | grep +++"
+szTxt="("$mydate"-"$mytime") +++ min Web Server, log ("$logFN")."
 logger  -i   -p user.info  $szTxt
 
 echo "+++ [`date -R`] +++ {ru.sh} +++ node Minimal Web Server app engega on ("$myhn")." >> $logFN
 
 /usr/bin/node  $my_path/my_server.js   >>  $logFN   2>&1   &
 
+exit 22

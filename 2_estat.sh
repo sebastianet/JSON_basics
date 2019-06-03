@@ -2,7 +2,7 @@
 
 strID='my_server.js'
 
-echo "+++ tenim la APP ($strID) running ?"
+echo "+++ tenim la APP ($strID) running ? +++"
 ps -ef | grep $strID | grep -v grep
 rv=$?
 echo "RV =" $rv

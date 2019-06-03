@@ -1,0 +1,7 @@
+{
+  "desc": "example nodes file for test",
+  "list": [
+    { "user": "someone",    "ip": "192.68.1.1", "lnk": "1st gw router" },
+    { "user": "anotherone", "ip": "192.68.1.2", "lnk": "2nd gw router" }
+  ]
+}

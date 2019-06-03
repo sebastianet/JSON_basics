@@ -1,14 +1,31 @@
 .
-+++ [Mon, 21 Jan 2019 22:50:50 +0100] +++ {ru.sh} +++ node Minimal Web Server app engega on (punt-omnia).
-module.js:328
-    throw err;
-    ^
+ engega normal i cron   : sudo ./1_engega.sh
+ log                    : /home/mate/logs/min_web_server.log
+ veure que corre        : ./2_estat.sh
+.
+//                       github : https://github.com/sebastianet/JSON_basics.git
+//                       git commit -am 'v 1.0 - first commit'
+//                       git push -u origin master
+.
 
-Error: Cannot find module 'express'
-.
- npm link express
-.
- +++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .
 +++ [Mon, 21 Jan 2019 22:55:35 +0100] +++ {ru.sh} +++ node Minimal Web Server app engega on (punt-omnia).
 Express node.js server listening on port 80
@@ -17,9 +34,4 @@ events.js:141
       ^
 
 Error: listen EACCES 0.0.0.0:80
-.
- engega normal    : sudo node my_Server.js
- engega cron      : sudo ./ru.sh
- log              : /home/mate/logs/min_web_server.log
- veure que corre  : ps -ef | grep node
 .

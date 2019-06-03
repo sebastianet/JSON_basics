@@ -4,7 +4,7 @@ build/Release
 # Dependency directory
 node_modules
 
-# envir file
+# envir file, specific to the environment, as Development or Production
 .env
 
 # old code, cmds, etc
