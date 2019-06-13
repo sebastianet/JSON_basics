@@ -40,7 +40,7 @@ fi
 szTxt="("$mydate"-"$mytime") +++ min Web Server, log ("$logFN")."
 logger  -i   -p user.info  $szTxt
 
-echo "+++ [`date -R`] +++ {ru.sh} +++ node Minimal Web Server app engega on ("$myhn")." >> $logFN
+echo "+++ [`date -R`] +++ {$0} +++ node Minimal Web Server app running on ("$myhn")." >> $logFN
 
 /usr/bin/node  $my_path/my_server.js   >>  $logFN   2>&1   &
 

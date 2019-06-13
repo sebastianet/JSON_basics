@@ -1,4 +1,7 @@
 .
+SERVER
+=======
+
  engega normal i cron   : sudo ./1_engega.sh
  log                    : /home/mate/logs/min_web_server.log
  veure que corre        : ./2_estat.sh
@@ -7,31 +10,11 @@
 //                       git commit -am 'v 1.0 - first commit'
 //                       git push -u origin master
 .
+CLIENT
+=======
+
+access http://10.139.238.194
+or     http://83.38.148.213:7080
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.
-+++ [Mon, 21 Jan 2019 22:55:35 +0100] +++ {ru.sh} +++ node Minimal Web Server app engega on (punt-omnia).
-Express node.js server listening on port 80
-events.js:141
-      throw er; // Unhandled 'error' event
-      ^
-
-Error: listen EACCES 0.0.0.0:80
-.

@@ -14,7 +14,7 @@
 
  Engega amb "npm start" i implementarem "npm test"
 
- Acces del client : http://83.38.148.213:7080/ 
+ Acces del client : http://83.38.148.213:7080/ o http://10.139.238.194
 
  Projecte desenvolupat a //pomnia/home/mate/nodejs-projects/min_web_server
     i enmagatzemat a https://github.com/sebastianet/JSON_basics

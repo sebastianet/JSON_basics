@@ -36,9 +36,11 @@
 //              2.1.e - use .env - https://www.npmjs.com/package/dotenv
 //              2.1.f - catch port busy
 //              2.1.g - read nodes from text file
+//              2.1.h - display port in ID message
+//              2.1.i - wide menu
 //
 
-var myVersion = "2.1.f" ;
+var myVersion = "2.1.i" ;
 
 var express = require( 'express' ) ;
 var morgan  = require( 'morgan' ) ;          // log requests to the console (express4)
@@ -55,13 +57,13 @@ app.use( bodyParser.json() ) ;
 app.use( morgan('dev') ) ;                   // log every request to the console
 
 // serve static files from ...
-app.use( express.static( path.join( __dirname, 'client' ) ) ) ;
+app.use( express.static( path.join( __dirname, 'client' ) ) ) ; // send index.html to "/" request
 
 // my variables
 
 const myEnv = dotenv.config();               //  read .env file, parse the contents, assign it to process.env
 if ( myEnv.error ) {
-    throw myEnv.error
+    throw myEnv.error                        //  return an object with a parsed key containing the loaded content or an error key if it failed
 } ;
 console.log( myEnv.parsed ) ;                // display .env file contents
 
@@ -151,34 +153,47 @@ var szRet = "---" ;
 
 app.use( function ( req, res, next ) {
 //    console.log( '### [' + szHostName + '] common TimeStamp: ' + (new Date).yyyymmdd() + '-' + (new Date).hhmmss() + ' ###' ) ;
-    console.log( '### [' + szHostName + '] common TimeStamp: ' + genTimeStamp() + ' ###' ) ;
+    console.log( '### common TimeStamp {' + genTimeStamp() + '} ### [' + szHostName + '] ###' ) ;
     next() ;
 } ) ; // timestamp all
 
 
-app.get( '/', function( req, res ) {
+app.get( '/ts', function( req, res ) {
 //
 // mind the text "WebSrv" is detected by scan_list.rexx tool !
 //
     var szTime = genTimeStamp() ;
+
+    let szId = '\n*** timestamp (' + szTime + ') ' ;
+    szId    += '*** host (' + szHostName + ') ' ;
+    szId    += '*** port (' + serverInfo.myPort + ') ' ;
+    szId    += '*** MinWebSrv v [' + myVersion + '] *** \n' ;
+
     res.writeHead( 200, {'Content-Type': 'text/plain'} ) ;
-    res.write( '\n*** host (' + szHostName + ') *** timestamp (' + szTime + ') *** MinWebSrv v [' + myVersion + '] *** \n' ) ;
+    res.write( szId ) ;
     res.end( ) ;
-    mConsole( `'* {' + szTime + '} * GET / method '` ) ;
+    mConsole( `'* {` + szTime + `} * GET /ts method '` ) ;
 } ) ; // get /
 
-app.get( '/whoami', function( req, res ) {
-    var szTime = genTimeStamp() ;
-    res.writeHead( 200, {'Content-Type': 'text/plain'} ) ;
-    res.write( '\n*** host (' + szHostName + ') *** timestamp (' + szTime + ') **** prog [' + __filename + '] *** \n' ) ;
-    res.end( ) ;
-    console.log( '* {' + szTime + '} * GET /lsof method' ) ;
-} ) ; // get /whoami
-
-
-app.get( '/sysinfo', function ( req, res ) {
-    res.send( serverInfo ) ;
+app.get( '/sysinfo_JSON', function ( req, res ) { // serverinfo they call it 
+    res.send( serverInfo ) ; // enviem un JSON !
 });
+
+app.get( '/whoami', function( req, res ) {
+
+    var szTime = genTimeStamp() ;
+
+    let szId = '\n*** timestamp (' + szTime + ') ' ;
+    szId    += '*** host (' + szHostName + ') ' ;
+    szId    += '*** port (' + serverInfo.myPort + ') ' ;
+    szId    += '**** prog (' + __filename + ') ' ;
+    szId    += '*** MinWebSrv v [' + myVersion + '] *** \n' ;
+
+    res.writeHead( 200, {'Content-Type': 'text/plain'} ) ;
+    res.write( szId ) ;
+    res.end( ) ;
+    mConsole( `* {` + szTime + `} * GET /whoami method` ) ;
+} ) ; // get /whoami
 
 app.get( '/veurejson', function ( req, res ) {
     res.send( myNodesJS ) ;
