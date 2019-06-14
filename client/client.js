@@ -19,10 +19,10 @@ Date.prototype.hhmmss = function () {
 	return myHHMMSS ;
 } ; // hhmmss
 
-// get a timestamp
+// get a timestamp at client
 function genTimeStamp ( arg ) {
 
-    var szOut = (new Date).yyyymmdd() + ' - ' + (new Date).hhmmss() ;
+    var szOut = "* " + (new Date).yyyymmdd() + ' - ' + (new Date).hhmmss() + " *" ;
     return szOut ;
 
 } ; // genTimeStamp()
@@ -51,7 +51,7 @@ $( ".clk_Serverinfo" ).click( function( ) {
     console.log( '*** (' + genTimeStamp() + ') *** click ServerInfo.' ) ;
     $.getJSON( '/sysinfo_JSON', function( my_json ) {
         console.log( '**** Demanem al express la branca SYSINFO JSON.' ) ;
-        var szInfo = `*** (` + genTimeStamp() + `) host ${my_json.hostName} at port ${my_json.myPort}.` ;
+        var szInfo = `>>> (` + genTimeStamp() + `) host (${my_json.hostName}) at port (${my_json.myPort}).` ;
         $( "#id_info_serverinfo" ).text( szInfo ) ;
     } ) ; // get('/sysinfo')
 }) ; // clk_Serverinfo
@@ -63,9 +63,10 @@ $( ".clk_Serverinfo" ).click( function( ) {
 
 $( ".clk_Serverstatus" ).click( function() {
     console.log( '*** (' + genTimeStamp() + ') *** click Serverstatus.' ) ;
-    $.get( '/whoami', function( page ) {
+    $.getJSON( '/sysStatus_JSON', function( qjson ) {
         console.log( '**** Demanem al express la branca WHOAMI.' ) ;
-        $( "#id_info_status" ).html( page ) ; // show received HTML at specific <div>
+        var szStatus = `>>> (` + genTimeStamp() + `) prog(${qjson.ProgId}) at host (${qjson.HostName}) at port (${qjson.PortNum}).` ;
+        $( "#id_info_status" ).text( szStatus ) ;
     } ) ; // get('/whoami')
 }) ; // clk_Serverstatus
 

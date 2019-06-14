@@ -10,7 +10,7 @@
 
 <hr>
 
-<h1> Estat del servidor WebSrv v 1.c </h1>
+<h1> MinWebSrv client v 1.d </h1>
 
 <hr>
 
@@ -21,21 +21,24 @@
 <hr>
 
 <div id="id_timestamp">
-<p> (*) get <a href="#" class="clk_Timestamp">timestamp</a>
+<p> (*) get <a href="#" class="clk_Timestamp">timestamp</a> -
+client {$.get()}, server {res.end()}
 <p id="id_info_timestamp">new timestamp</p>
 </div>
 
 <hr>
 
 <div id="id_serverinfo">
-<p> (*) get <a href="#" class="clk_Serverinfo">serverinfo</a>
+<p> (*) get <a href="#" class="clk_Serverinfo">serverinfo</a> -
+client {$.getJSON()}, server {res.send(JSON)}
 <p id="id_info_serverinfo">new server info</p>
 </div>
 
 <hr>
 
 <div id="id_status">
-<p> (*) get <a href="#" class="clk_Serverstatus">status</a>
+<p> (*) get <a href="#" class="clk_Serverstatus">status</a> -
+client {$.getJSON()}, server {res.json(JSON)}
 <p id="id_info_status">new status</p>
 </div>
 

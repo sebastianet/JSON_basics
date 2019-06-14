@@ -38,9 +38,10 @@
 //              2.1.g - read nodes from text file
 //              2.1.h - display port in ID message
 //              2.1.i - wide menu
+//              2.1.j - dentify Cli and Srv operations
 //
 
-var myVersion = "2.1.i" ;
+var myVersion = "2.1.j" ;
 
 var express = require( 'express' ) ;
 var morgan  = require( 'morgan' ) ;          // log requests to the console (express4)
@@ -117,6 +118,7 @@ Date.prototype.hhmmss = function () {
 } ; // hhmmss()
 
 
+// get a timestamp at server
 function genTimeStamp ( arg ) {
 
     var szOut = "# " + (new Date).yyyymmdd() + ' - ' + (new Date).hhmmss() + " #" ;
@@ -164,14 +166,21 @@ app.get( '/ts', function( req, res ) {
 //
     var szTime = genTimeStamp() ;
 
-    let szId = '\n*** timestamp (' + szTime + ') ' ;
+//    let jsonTimestamp = {
+//        HostName : 'host (' + szHostName + ')',
+//        PortNum  : 'port (' + serverInfo.myPort + ')',
+//        ProgId   : 'MinWebSrv v (' + myVersion + ')'
+//    } ; // jsonTimestamp
+//    res.send( jsonTimestamp ) ;
+
+    let szId = '<<< (' + szTime + ') ' ;
     szId    += '*** host (' + szHostName + ') ' ;
     szId    += '*** port (' + serverInfo.myPort + ') ' ;
-    szId    += '*** MinWebSrv v [' + myVersion + '] *** \n' ;
-
+    szId    += '*** MinWebSrv v [' + myVersion + '] *** ' ;
     res.writeHead( 200, {'Content-Type': 'text/plain'} ) ;
     res.write( szId ) ;
     res.end( ) ;
+
     mConsole( `'* {` + szTime + `} * GET /ts method '` ) ;
 } ) ; // get /
 
@@ -179,19 +188,27 @@ app.get( '/sysinfo_JSON', function ( req, res ) { // serverinfo they call it
     res.send( serverInfo ) ; // enviem un JSON !
 });
 
-app.get( '/whoami', function( req, res ) {
+app.get( '/sysStatus_JSON', function( req, res ) {
 
     var szTime = genTimeStamp() ;
 
-    let szId = '\n*** timestamp (' + szTime + ') ' ;
-    szId    += '*** host (' + szHostName + ') ' ;
-    szId    += '*** port (' + serverInfo.myPort + ') ' ;
-    szId    += '**** prog (' + __filename + ') ' ;
-    szId    += '*** MinWebSrv v [' + myVersion + '] *** \n' ;
+//    let szId = '\n*** timestamp (' + szTime + ') ' ;
+//    szId    += '*** host (' + szHostName + ') ' ;
+//    szId    += '*** port (' + serverInfo.myPort + ') ' ;
+//    szId    += '**** prog (' + __filename + ') ' ;
+//    szId    += '*** MinWebSrv v [' + myVersion + '] *** \n' ;
 
-    res.writeHead( 200, {'Content-Type': 'text/plain'} ) ;
-    res.write( szId ) ;
-    res.end( ) ;
+//    res.writeHead( 200, {'Content-Type': 'text/plain'} ) ;
+//    res.write( szId ) ;
+//    res.end( ) ;
+
+    let jsonStatus = {
+        HostName : szHostName,
+        PortNum  : serverInfo.myPort,
+        ProgId   : 'MinWebSrv v [' + myVersion + ']'
+    } ; // jsonTimestamp
+    res.json( jsonStatus ) ;
+
     mConsole( `* {` + szTime + `} * GET /whoami method` ) ;
 } ) ; // get /whoami
 
